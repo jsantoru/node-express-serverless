@@ -5,11 +5,15 @@ const router = require('./router');
 
 // endpoints
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
+/*
+ * static content
+ */
+app.use('/', express.static('web/projectname'));
 
-app.use('/serverless/', router);
+/*
+ * api
+ */
+app.use('/api/', router);
 
 if("service" === process.argv[2]) {
   // run as express service
