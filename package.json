@@ -14,6 +14,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
+    "intrinio-client": "0.0.5",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2",
     "serverless-http": "^1.5.5"
   },
   "devDependencies": {
