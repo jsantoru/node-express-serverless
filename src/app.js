@@ -6,12 +6,14 @@ const config = require('../config/config');
 
 const router = require('./router');
 
-// endpoints
+/*
+ * static content
+ */
+app.use('/esppcalc', express.static('web/espp-calc'));
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
-
+/*
+ * api
+ */
 // apikey is required for all api calls
 app.use(function(req, res, next) {
   if(req.query.apikey === config.app.apikey) {
@@ -26,6 +28,10 @@ app.use(function(req, res, next) {
 app.use(function(req, res, next) {
   res.set('Content-Type', 'application/json');
   next();
+});
+
+app.get('/', function (req, res) {
+  res.send('Hello World!');
 });
 
 app.use('/api/', router);
