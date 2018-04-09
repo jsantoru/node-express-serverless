@@ -9,7 +9,7 @@ const router = require('./router');
 /*
  * static content
  */
-app.use('/', express.static('web/espp-calc', {redirect:false}));
+app.use('/', express.static('web/espp-calc'));
 
 /*
  * api
