@@ -9,7 +9,7 @@ const router = require('./router');
 /*
  * static content
  */
-app.use('/esppcalc', express.static('web/espp-calc'));
+app.use('/', express.static('web/espp-calc', {redirect:false}));
 
 /*
  * api
@@ -28,10 +28,6 @@ app.use(function(req, res, next) {
 app.use(function(req, res, next) {
   res.set('Content-Type', 'application/json');
   next();
-});
-
-app.get('/', function (req, res) {
-  res.send('Hello World!');
 });
 
 app.use('/api/', router);
