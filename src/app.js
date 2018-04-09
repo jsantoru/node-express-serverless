@@ -9,7 +9,7 @@ app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
-app.use('/api/', router);
+app.use('/serverless/', router);
 
 if("service" === process.argv[2]) {
   // run as express service
