@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "local": "sls offline start",
+    "local-service": "node src/app.js service",
     "deploy": "sls deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
