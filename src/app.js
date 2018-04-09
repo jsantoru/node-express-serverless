@@ -8,7 +8,7 @@ const router = require('./router');
 /*
  * static content
  */
-app.use('/', express.static('web/projectname'));
+app.use('/', express.static('web'));
 
 /*
  * api
