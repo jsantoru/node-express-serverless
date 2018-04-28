@@ -3,12 +3,16 @@ const express = require('express');
 const app = express();
 const router = require('./router');
 
+const bodyParser = require('body-parser');
+
 // endpoints
 
 /*
  * static content
  */
 app.use('/', express.static('web'));
+
+app.use(bodyParser.json({ strict: false }));
 
 /*
  * api
