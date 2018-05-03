@@ -1,9 +1,9 @@
 # serverless.yml
 
-service: node-express-serverless
+service: api-resume-serverless
 
 custom:
-  tableName: 'users-table-${self:provider.stage}'
+  tableName: 'resume-${self:provider.stage}'
 
 provider:
   name: aws
@@ -20,9 +20,9 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource:
-        - { "Fn::GetAtt": ["UsersDynamoDBTable", "Arn" ] }
+        - { "Fn::GetAtt": ["ResumeDynamoDBTable", "Arn" ] }
   environment:
-    USERS_TABLE: ${self:custom.tableName}
+    RESUME_TABLE: ${self:custom.tableName}
 
 functions:
   app:
@@ -33,16 +33,16 @@ functions:
 
 resources:
   Resources:
-    UsersDynamoDBTable:
+    ResumeDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
         AttributeDefinitions:
           -
-            AttributeName: userId
+            AttributeName: resumeId
             AttributeType: S
         KeySchema:
           -
-            AttributeName: userId
+            AttributeName: resumeId
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1

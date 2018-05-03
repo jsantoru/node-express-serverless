@@ -4,8 +4,9 @@ const router = express.Router();
 
 const bodyParser = require('body-parser');
 const AWS = require('aws-sdk');
+AWS.config.update({region:'us-east-1'});
 
-const USERS_TABLE = process.env.USERS_TABLE;
+const RESUME_TABLE = process.env.RESUME_TABLE;
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 router.route('/test/:id').get( (req, res) => {
@@ -16,49 +17,46 @@ router.route('/test/:id').get( (req, res) => {
   res.send({"id":id});
 });
 
-router.route('/users').post( (req, res) => {
-  const { userId, name } = req.body;
-  if (typeof userId !== 'string') {
-    res.status(400).json({ error: '"userId" must be a string' });
-  } else if (typeof name !== 'string') {
-    res.status(400).json({ error: '"name" must be a string' });
-  }
+router.route('/resume').post( (req, res) => {
+  console.log(req.body);
+  const { resumeId, name, skills } = req.body;
 
   const params = {
-    TableName: USERS_TABLE,
+    TableName: RESUME_TABLE,
     Item: {
-      userId: userId,
+      resumeId: resumeId,
       name: name,
+      skills: skills
     },
   };
 
   dynamoDb.put(params, (error) => {
     if (error) {
       console.log(error);
-      res.status(400).json({ error: 'Could not create user' });
+      res.status(400).json({ error: 'Could not create resume' });
     }
-    res.json({ userId, name });
+    res.json({ resumeId, name, skills });
   });
 });
 
-router.route('/users/:userId').get( (req, res) => {
+router.route('/resume/:resumeId').get( (req, res) => {
   const params = {
-    TableName: USERS_TABLE,
+    TableName: RESUME_TABLE,
     Key: {
-      userId: req.params.userId,
+      resumeId: req.params.resumeId,
     },
   };
 
   dynamoDb.get(params, (error, result) => {
     if (error) {
       console.log(error);
-      res.status(400).json({ error: 'Could not get user' });
+      res.status(400).json({ error: 'Could not get resume' });
     }
     if (result.Item) {
-      const {userId, name} = result.Item;
-      res.json({ userId, name });
+      const {resumeId, name, skills} = result.Item;
+      res.json({ resumeId, name, skills});
     } else {
-      res.status(404).json({ error: "User not found" });
+      res.status(404).json({ error: "Resume not found" });
     }
   });
 });
